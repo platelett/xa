@@ -1,0 +1,16 @@
+env.local.sh
+.env
+.env.*
+__pycache__/
+*.py[cod]
+*.so
+*.o
+*.a
+*.log
+.build/
+*.egg-info/
+results/
+PROF_*/
+backends/xllm/ref/opp/
+backends/xllm/ref/src/pybind/build/
+backends/xllm/ref/src/pybind/dist/

@@ -1,0 +1,89 @@
+{
+  "measurement_date": "2026-10-08",
+  "compiler_commit": "4c7267018af02284ff28f1cd090a1492c7985bed",
+  "compiler_library_sha256": "c8ebe7e6f05f18c8e35b38a94407a34e6af398542ecfffbd513ee802f788881a",
+  "compiler_tvm_patches": [
+    "tvm_slice_step_fix.patch",
+    "tvm_backtrace_symbol_name_length.patch"
+  ],
+  "expert_v1_upstream_path": "examples/xattention/xattention.py",
+  "expert_v2_pr": 1864,
+  "expert_v2_pr_commit": "b41fdd3f8eb8917b46fb20a7b8e6d2e0d029960d",
+  "xllm_ops_submodule_commit": "6c9a2ac69bb2981e83783d677262241a31010434",
+  "seed": 0,
+  "warmup": 3,
+  "iterations": 20,
+  "atol": 0.01,
+  "rtol": 0.01,
+  "device": 14,
+  "files": [
+    {
+      "path": "core/bench.py",
+      "sha256": "27ef6289d0371c45983c6eb44db3d3678796b88d911187589df6561a009df54d"
+    },
+    {
+      "path": "core/profiler.py",
+      "sha256": "96b09fab8370da079954508f0ad39a06352b9d07d723be97b6178a3f7aa62d12"
+    },
+    {
+      "path": "problem/cases.py",
+      "sha256": "5c7d9645a8ee4e7b41d5fe5474e528946679d8fe02ceb215c1591600da63ab65"
+    },
+    {
+      "path": "problem/canonical.py",
+      "sha256": "c060252cef585fc6ce7c4636ac4cac0dd89215db72faf8721487abdbb9658eec"
+    },
+    {
+      "path": "backends/expert_v1/impl.py",
+      "sha256": "ff5b3f940048bfe467733f0a27fb184b26453729f49429552d959723397e69d8"
+    },
+    {
+      "path": "backends/expert_v2/impl.py",
+      "sha256": "0f68ae3830497ab75032957fa0852e51dea729f27019e871a0465cefd0370232"
+    },
+    {
+      "path": "backends/expert_v1/impl_tl.py",
+      "sha256": "ff5b3f940048bfe467733f0a27fb184b26453729f49429552d959723397e69d8"
+    },
+    {
+      "path": "backends/expert_v1/backend.py",
+      "sha256": "0b15ba9acc2b11c74d017ebe61774600e258a8ef01aaa538aeb24db1b16e1deb"
+    },
+    {
+      "path": "backends/expert_v1/preprocess.py",
+      "sha256": "6daae74ba08e6131ae05f27d1c51317c00d7004b4b09d2d577439b9f59841737"
+    },
+    {
+      "path": "backends/expert_v2/impl_tl.py",
+      "sha256": "0f68ae3830497ab75032957fa0852e51dea729f27019e871a0465cefd0370232"
+    },
+    {
+      "path": "backends/expert_v2/backend.py",
+      "sha256": "b27deaaf7419b37e6318778ac277d29cc79943a8f80c12ce62b2c6a9b59bf174"
+    },
+    {
+      "path": "backends/expert_v2/preprocess.py",
+      "sha256": "6daae74ba08e6131ae05f27d1c51317c00d7004b4b09d2d577439b9f59841737"
+    },
+    {
+      "path": "backends/xllm/backend.py",
+      "sha256": "e6d29450174db2ab540a77dc4a9d3e9cc9cbf5119fe00ba7a46dec56ec148b87"
+    },
+    {
+      "path": "backends/xllm/ref/python/custom_ops.py",
+      "sha256": "dcba54f84c93f2a18f5c0238ccbb2b24cc10da5f77158003dba23164c478a8f6"
+    },
+    {
+      "path": "backends/xllm/ref/setup_ref.sh",
+      "sha256": "faf0f7dcd5f144aa4f1f627ce3197de5882bc6712f6c495cd9f4e49142467ba2"
+    },
+    {
+      "path": "backends/xllm/ref/src/pybind/RegisterOps.cpp",
+      "sha256": "836c6d68c76c5f165679754b3cf7dd0e3d2c1e1c2ae560a363397af70ad2830d"
+    },
+    {
+      "path": "backends/xllm/ref/src/pybind/setup.py",
+      "sha256": "196069e981af909ed9ecdc57b3aab0341d5969b6950229e9a19e17e90b44474f"
+    }
+  ]
+}
