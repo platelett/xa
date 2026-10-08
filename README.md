@@ -9,9 +9,10 @@ decode attention：每个请求的多个 beam 共用历史 K/V，每个 beam 再
 | Backend | 说明 |
 |---|---|
 | `xllm` | `aclnnXAttention`，正确性参考 |
-| `expert_v1` | TileLang-Ascend `ascendc_pto@4c726701` 的原非分页 XA，20 个共享 Cube 核和 4 个私有 Cube 核，写回后合并 |
-| `expert_v2` | [PR #1864](https://github.com/tile-ai/tilelang-ascend/pull/1864) 的实现，24 个参与核处理共享前缀，私有部分用 Vector 计算并在最后一个共享块就地合并 |
+| `expert_v1` | 上游旧版 [`examples/xattention/xattention.py`](https://github.com/tile-ai/tilelang-ascend/blob/4c7267018af02284ff28f1cd090a1492c7985bed/examples/xattention/xattention.py)，20 个共享 Cube 核和 4 个私有 Cube 核，写回后合并 |
+| `expert_v2` | [PR #1864](https://github.com/tile-ai/tilelang-ascend/pull/1864) 的 [`examples/xattention/expert_v2/kernel.py`](https://github.com/tile-ai/tilelang-ascend/blob/b41fdd3f8eb8917b46fb20a7b8e6d2e0d029960d/examples/xattention/expert_v2/kernel.py)，24 个参与核处理共享前缀，私有部分用 Vector 计算并在最后一个共享块就地合并 |
 
+上游旧版尚未放进 `expert_v1/` 目录，本仓库把它统一称为 `expert_v1`；不是另一个算法。
 v1 只增加问题尺寸参数、harness 的符号名及输入适配，不更改原调度与计算。
 两版输入输出均为 BF16，32 个 query 头共享 8 个 K/V 头，头维度 128，私有长度为 2。
 v2 的中文优化历程和历史数据见 [实现说明](backends/expert_v2/README.md)；历史结果不替代当前主线实测。
@@ -31,8 +32,11 @@ v2 的设备内核用时为旧版的 60.6%–97.6%，对应 1.024–1.651x 加�
 `128,256,512,1024,2048,4096`。标准输入由 [canonical.py](problem/canonical.py) 生成，
 默认 benchmark seed 为 0。没有另选小问题替代这组矩阵。
 
-先提供已构建的 TileLang-Ascend 主线环境；本次编译器基线为
-[`4c726701`](https://github.com/tile-ai/tilelang-ascend/commit/4c7267018af02284ff28f1cd090a1492c7985bed)。
+先提供已构建的 [TileLang-Ascend 最新 `ascendc_pto` 主线](https://github.com/tile-ai/tilelang-ascend/tree/ascendc_pto)
+环境，不要求停留在某个 PR 分支。2026-10-08 核实的主线 HEAD 为
+[`4c726701`](https://github.com/tile-ai/tilelang-ascend/commit/4c7267018af02284ff28f1cd090a1492c7985bed)，
+与本次实测使用的编译器版本相同。日后主线更新后，须重新跑原矩阵确认兼容性与性能；
+历史报告保留原版本，不直接换成新的标签。
 运行环境需要 Python、PyTorch、`torch_npu`、CANN/BiSheng 和已构建的 TileLang-Ascend；
 本仓库不安装这些系统依赖。公开源码下载方式：
 
