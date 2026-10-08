@@ -9,10 +9,11 @@ decode attention：每个请求的多个 beam 共用历史 K/V，每个 beam 再
 | Backend | 说明 |
 |---|---|
 | `xllm` | `aclnnXAttention`，正确性参考 |
-| `expert_v1` | 上游旧版 [`examples/xattention/xattention.py`](https://github.com/tile-ai/tilelang-ascend/blob/4c7267018af02284ff28f1cd090a1492c7985bed/examples/xattention/xattention.py)，20 个共享 Cube 核和 4 个私有 Cube 核，写回后合并 |
-| `expert_v2` | [PR #1864](https://github.com/tile-ai/tilelang-ascend/pull/1864) 的 [`examples/xattention/expert_v2/kernel.py`](https://github.com/tile-ai/tilelang-ascend/blob/b41fdd3f8eb8917b46fb20a7b8e6d2e0d029960d/examples/xattention/expert_v2/kernel.py)，24 个参与核处理共享前缀，私有部分用 Vector 计算并在最后一个共享块就地合并 |
+| `expert_v1` | [PR #1864](https://github.com/tile-ai/tilelang-ascend/pull/1864) 的 [`examples/xattention/expert_v1/kernel.py`](https://github.com/tile-ai/tilelang-ascend/blob/a7f73975bb4bdce7f529059a577da512772b739f/examples/xattention/expert_v1/kernel.py)，20 个共享 Cube 核和 4 个私有 Cube 核，写回后合并 |
+| `expert_v2` | 同一 PR 的 [`examples/xattention/expert_v2/kernel.py`](https://github.com/tile-ai/tilelang-ascend/blob/a7f73975bb4bdce7f529059a577da512772b739f/examples/xattention/expert_v2/kernel.py)，24 个参与核处理共享前缀，私有部分用 Vector 计算并在最后一个共享块就地合并 |
 
-上游旧版尚未放进 `expert_v1/` 目录，本仓库把它统一称为 `expert_v1`；不是另一个算法。
+上游已有脚本也已归入 `expert_v1/`，只移动路径，文件内容不变。
+本仓库的 v1 对应非分页入口；同目录的 `expert_v1/paged.py` 不参与这份连续输入性能对照。
 v1 只增加问题尺寸参数、harness 的符号名及输入适配，不更改原调度与计算。
 两版输入输出均为 BF16，32 个 query 头共享 8 个 K/V 头，头维度 128，私有长度为 2。
 v2 的中文优化历程和历史数据见 [实现说明](backends/expert_v2/README.md)；历史结果不替代当前主线实测。
